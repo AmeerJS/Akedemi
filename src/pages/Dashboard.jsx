@@ -1,43 +1,81 @@
 import { useEffect, useState } from "react";
-import StatsCard from "../components/StatsCard";
+import axios from "axios";
+import ChartSection from "../components/ChartSection";
+import Calendar from '../components/Calender';
+import FinanceChart from "../components/Finance";
+
+import StudentIcon from "../assets/icons/studentwhite.svg?react";
+import TeacherIcon from "../assets/icons/teacherwhite.svg?react";
+import EventIcon from "../assets/icons/calenderwhite.svg?react";
+import FoodIcon from "../assets/icons/foodwhite.svg?react";
 
 export default function Dashboard() {
   const [Stats, setStats] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/dashboard/stats")
-      .then((res) => res.json())
-      .then((data) => {
-        const styledData = data.map((item) => {
+    axios
+      .get("http://localhost:5000/api/dashboard/stats")
+      .then((res) => {
+        const styledData = res.data.map((item) => {
           switch (item.label) {
             case "Students":
-              return { ...item, icon: "👨‍🎓", color: "bg-orange-100", textColor: "text-orange-500" };
+              return {
+                ...item,
+                icon: <StudentIcon className="w-6 h-6 text-white" />,
+                bgColor: "bg-[#4D44B5]",
+              };
             case "Teachers":
-              return { ...item, icon: "👩‍🏫", color: "bg-purple-100", textColor: "text-purple-500" };
+              return {
+                ...item,
+                icon: <TeacherIcon className="w-6 h-6 text-white" />,
+                bgColor: "bg-[#FB7D5B]",
+              };
             case "Events":
-              return { ...item, icon: "📅", color: "bg-pink-100", textColor: "text-pink-500" };
+              return {
+                ...item,
+                icon: <EventIcon className="w-6 h-6 text-white" />,
+                bgColor: "bg-[#FCC43E]",
+              };
             case "Foods":
-              return { ...item, icon: "🍱", color: "bg-indigo-100", textColor: "text-indigo-500" };
+              return {
+                ...item,
+                icon: <FoodIcon className="w-6 h-6 text-white" />,
+                bgColor: "bg-[#303972]",
+              };
             default:
               return item;
           }
         });
+
         setStats(styledData);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch stats:", err);
       });
   }, []);
 
   return (
-    <div className="space-y-4">
-      <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="space-y-6">
+      <div className="w-full h-28 bg-white rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
         {Stats.map((item, idx) => (
-          <StatsCard key={idx} {...item} />
+          <div key={idx} className="flex items-center space-x-4 min-w-[180px]" >
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${item.bgColor}`}>
+              {item.icon}
+            </div>
+            <div> <h4 className="text-sm text-gray-500 font-medium"> {item.label} </h4>
+              <p className="text-2xl font-semibold text-gray-800"> {item.value} </p>
+            </div>
+          </div>
+
+          
         ))}
       </div>
-    </div>
-      <div>Charts Section</div>
-      <div>Calendar</div>
-      <div>Student Table</div>
+
+      <ChartSection />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Calendar />
+        <FinanceChart />
+      </div>
     </div>
   );
 }
