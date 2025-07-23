@@ -25,7 +25,7 @@ export default function Sidebar() {
     },
   ];
   return (
-    <div className="w-[280px] h-screen bg-[#4B2AAD] text-white flex flex-col justify-between">
+    <div className="w-[280px] h-422 bg-[#4B2AAD] text-white flex flex-col justify-between">
       <div className="pl-10 py-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 flex items-center"><LogoIcon /></div>

@@ -9,3 +9,5 @@ router.get("/stats", (req, res) => {
     { label: "Foods", value: 32000 }
   ]);
 });
+
+export default router;

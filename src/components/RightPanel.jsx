@@ -1,6 +1,6 @@
-import RecentStudents from "./RightPanel/RecentStudent";
-import Messages from "./RightPanel/Messages";
-import FoodMenu from "./RightPanel/FoodMenu";
+import RecentStudents from "./RecentStudent";
+import Messages from "./Messages";
+import FoodMenu from "./FoodMenu";
 
 export default function RightPanel() {
   return (

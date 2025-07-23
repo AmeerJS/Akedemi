@@ -3,11 +3,11 @@ import axios from "axios";
 import ChartSection from "../components/ChartSection";
 import Calendar from '../components/Calender';
 import FinanceChart from "../components/Finance";
-
 import StudentIcon from "../assets/icons/studentwhite.svg?react";
 import TeacherIcon from "../assets/icons/teacherwhite.svg?react";
 import EventIcon from "../assets/icons/calenderwhite.svg?react";
 import FoodIcon from "../assets/icons/foodwhite.svg?react";
+import UnpaidStudentTable from "../components/UnpaidStudentTable";
 
 export default function Dashboard() {
   const [Stats, setStats] = useState([]);
@@ -65,17 +65,15 @@ export default function Dashboard() {
             <div> <h4 className="text-sm text-gray-500 font-medium"> {item.label} </h4>
               <p className="text-2xl font-semibold text-gray-800"> {item.value} </p>
             </div>
-          </div>
-
-          
+          </div>  
         ))}
       </div>
-
       <ChartSection />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Calendar />
         <FinanceChart />
       </div>
+      <UnpaidStudentTable />
     </div>
   );
 }
