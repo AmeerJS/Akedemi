@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import RightPanel from "../components/RightPanel";
 import ChartSection from "../components/ChartSection";
-import Calendar from '../components/Calender';
+import Calendar from "../components/Calender";
 import FinanceChart from "../components/Finance";
+import UnpaidStudentTable from "../components/UnpaidStudentTable";
+
 import StudentIcon from "../assets/icons/studentwhite.svg?react";
 import TeacherIcon from "../assets/icons/teacherwhite.svg?react";
 import EventIcon from "../assets/icons/calenderwhite.svg?react";
 import FoodIcon from "../assets/icons/foodwhite.svg?react";
-import UnpaidStudentTable from "../components/UnpaidStudentTable";
 
 export default function Dashboard() {
   const [Stats, setStats] = useState([]);
@@ -55,25 +59,41 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="space-y-6">
-      <div className="w-full h-28 bg-white rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        {Stats.map((item, idx) => (
-          <div key={idx} className="flex items-center space-x-4 min-w-[180px]" >
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${item.bgColor}`}>
-              {item.icon}
-            </div>
-            <div> <h4 className="text-sm text-gray-500 font-medium"> {item.label} </h4>
-              <p className="text-2xl font-semibold text-gray-800"> {item.value} </p>
-            </div>
-          </div>  
-        ))}
+    <div className="flex min-h-screen bg-gray-100">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <Navbar />
+        <main className="flex-1 p-4 space-y-6">
+          {/* Stat Cards */}
+          <div className="w-full h-28 bg-white rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            {Stats.map((item, idx) => (
+              <div key={idx} className="flex items-center space-x-4 min-w-[180px]">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${item.bgColor}`}>
+                  {item.icon}
+                </div>
+                <div>
+                  <h4 className="text-sm text-gray-500 font-medium">{item.label}</h4>
+                  <p className="text-2xl font-semibold text-gray-800">{item.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Charts */}
+          <ChartSection />
+
+          {/* Calendar + Finance */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Calendar />
+            <FinanceChart />
+          </div>
+
+          {/* Unpaid Students */}
+          <UnpaidStudentTable />
+        </main>
       </div>
-      <ChartSection />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Calendar />
-        <FinanceChart />
-      </div>
-      <UnpaidStudentTable />
+
+      <RightPanel />
     </div>
   );
 }
