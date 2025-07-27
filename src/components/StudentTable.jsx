@@ -118,13 +118,13 @@ export default function StudentTable() {
                     {student.gradeColor.startsWith("#") ? (
                       <span
                         style={{ backgroundColor: student.gradeColor }}
-                        className="text-white px-3 py-1 rounded-full text-sm"
+                        className="text-white px-4 py-2 rounded-full text-sm"
                       >
                         {student.grade}
                       </span>
                     ) : (
                       <span
-                        className={`text-white px-3 py-1 rounded-full text-sm ${student.gradeColor}`}
+                        className={`text-white px-4 py-2 rounded-full text-sm ${student.gradeColor}`}
                       >
                         {student.grade}
                       </span>
